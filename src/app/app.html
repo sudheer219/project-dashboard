@@ -1,0 +1,38 @@
+<h1>{{title() }}</h1>
+
+<main>
+  <app-notification-bell [alertMessage]="currentAlert()" (alertDismissed)="currentAlert.set('')">
+  </app-notification-bell>
+
+  <div class="task-actions">
+    <input #taskTitleInput 
+    type="text" 
+    placeholder="Enter new Task Title"    
+    (keydown.enter)="handleTaskSubmit(taskTitleInput)"
+    (input)="0"
+    >
+    <button 
+    (click)="handleTaskSubmit(taskTitleInput)"
+    [disabled]="!taskTitleInput.value.trim()">Add New Task</button>
+  </div>
+
+  @if(taskList().length > 0){
+
+  @for (singleTask of taskList(); track singleTask.id){
+  <app-task-card 
+  [taskData]="singleTask" 
+  (taskCompleted)="completeTask($event)"
+  (taskDeleted)="deleteTask($event)"></app-task-card>
+  }
+
+  } @else {
+
+  <!-- This displays only when the task array is empty -->
+  <div style="text-align: center; margin-top: 24px;">
+    <p>🎉 All caught up! No tasks left for today.</p>
+
+    <button (click)="resetDashboard()">Reset Dashboard</button>
+  </div>
+
+  }
+</main>

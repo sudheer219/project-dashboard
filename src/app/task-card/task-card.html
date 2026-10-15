@@ -1,0 +1,23 @@
+<div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 6px;">
+    <h2>Task: {{ taskData().id | uppercase }}</h2>
+
+    @if(taskData().status === 'Completed'){
+        ✅ Done!
+    } @else {
+    <button (click)="taskCompleted.emit(taskData().id)">
+    Complete Task
+    </button>
+    }
+    
+
+    <p>Description: {{ taskData().name }}</p>
+    <p>Status: 
+        <span [class.badge-completed]="taskData().status ==='Completed'"
+              [class.badge-progress]="taskData().status ==='In Progress'"  >
+            {{ taskData().status }}
+        </span>
+    </p>
+
+    <button (click)="taskDeleted.emit(taskData().id)">Delete Task</button>
+
+</div>
